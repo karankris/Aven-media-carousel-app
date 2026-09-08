@@ -19,7 +19,7 @@ export default function Home() {
       </main>
 
       <footer className="app-footer">
-        <p>AVEN MEDIA — Local stories, made known.</p>
+        <p>AVEN MEDIA — Local stories, made known to everyone.</p>
       </footer>
     </>
   );
