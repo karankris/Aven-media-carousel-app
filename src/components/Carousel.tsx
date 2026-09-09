@@ -2,13 +2,56 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 
-const TOTAL_SLIDES = 8;
+const TOTAL_SLIDES = 9;
 
 export default function Carousel() {
   const [current, setCurrent] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
+
+  // CTA Form State
+  const [formData, setFormData] = useState({
+    name: "",
+    company: "",
+    phone: "",
+    requirements: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formStatus, setFormStatus] = useState<{ type: "success" | "error"; msg: string } | null>(null);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleBookSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name.trim() || !formData.phone.trim()) {
+      setFormStatus({ type: "error", msg: "Please enter your Name and Phone number." });
+      return;
+    }
+    setIsSubmitting(true);
+    setFormStatus(null);
+
+    try {
+      const res = await fetch("/api/book", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setFormStatus({ type: "success", msg: "Booking request submitted successfully! We will contact you soon." });
+        setFormData({ name: "", company: "", phone: "", requirements: "" });
+      } else {
+        setFormStatus({ type: "error", msg: data.error || "Failed to submit booking." });
+      }
+    } catch {
+      setFormStatus({ type: "error", msg: "Network error. Please try again or click Contact Now." });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const showNext = useCallback(() => {
     setCurrent((prev) => (prev + 1) % TOTAL_SLIDES);
@@ -28,16 +71,7 @@ export default function Carousel() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [showNext, showPrev]);
 
-  // Autoplay timer
-  useEffect(() => {
-    if (!isPlaying) return;
-    const timer = setInterval(() => {
-      showNext();
-    }, 6400);
-    return () => clearInterval(timer);
-  }, [isPlaying, showNext]);
-
-  // Touch handlers
+  // Touch handlers for manual swiping
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.changedTouches[0].screenX;
   };
@@ -52,7 +86,7 @@ export default function Carousel() {
   return (
     <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
       <main
-        className="stage"
+        className={`stage ${current === 8 ? "stage-s9" : ""}`}
         aria-label="AVEN Media local growth carousel"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
@@ -92,7 +126,7 @@ export default function Carousel() {
           </div>
           <div className="signature">
             <span><strong>Your business.</strong> Our content.</span>
-            <span className="mark">01 / 08</span>
+            <span className="mark">01 / 09</span>
           </div>
         </section>
 
@@ -133,7 +167,7 @@ export default function Carousel() {
           </div>
           <div className="signature">
             <span><strong>Be noticed.</strong> Be remembered.</span>
-            <span className="mark">02 / 08</span>
+            <span className="mark">02 / 09</span>
           </div>
         </section>
 
@@ -172,7 +206,7 @@ export default function Carousel() {
           </div>
           <div className="signature">
             <span><strong>Clear idea.</strong> Wider reach.</span>
-            <span className="mark">03 / 08</span>
+            <span className="mark">03 / 09</span>
           </div>
         </section>
 
@@ -202,7 +236,7 @@ export default function Carousel() {
           <p className="note reveal d4">One post → an ongoing presence</p>
           <div className="signature">
             <span><strong>Consistency</strong> creates connection.</span>
-            <span className="mark">04 / 08</span>
+            <span className="mark">04 / 09</span>
           </div>
         </section>
 
@@ -240,7 +274,7 @@ export default function Carousel() {
           </div>
           <div className="signature">
             <span><strong>Your page.</strong> A stronger presence.</span>
-            <span className="mark">05 / 08</span>
+            <span className="mark">05 / 09</span>
           </div>
         </section>
 
@@ -283,7 +317,7 @@ export default function Carousel() {
           </div>
           <div className="signature">
             <span><strong>Flexible support.</strong> Real growth.</span>
-            <span className="mark">06 / 08</span>
+            <span className="mark">06 / 09</span>
           </div>
         </section>
 
@@ -314,7 +348,7 @@ export default function Carousel() {
           </div>
           <div className="signature">
             <span><strong>Local today.</strong> Known tomorrow.</span>
-            <span className="mark">07 / 08</span>
+            <span className="mark">07 / 09</span>
           </div>
         </section>
 
@@ -345,7 +379,107 @@ export default function Carousel() {
           <img className="team reveal d2" src="/assets/aavan-team.png" alt="AVEN Media team" />
           <div className="signature">
             <span><strong>AVEN MEDIA</strong> — Local stories, made known.</span>
-            <span className="mark">08 / 08</span>
+            <span className="mark">08 / 09</span>
+          </div>
+        </section>
+
+        {/* Slide 9 - CTA Booking & Contact */}
+        <section className={`slide s9 ${current === 8 ? "active" : ""}`} data-slide="9">
+          <div className="grain"></div>
+          <div className="topline">
+            <span className="brand"><i></i>AVEN MEDIA</span>
+            <span className="progress">
+              {Array.from({ length: TOTAL_SLIDES }).map((_, i) => (
+                <b key={i} className={i === current ? "on" : ""} onClick={() => setCurrent(i)} title={`Go to slide ${i + 1}`} />
+              ))}
+            </span>
+          </div>
+
+          <div className="cta-container">
+            <div className="copy cta-header reveal d1">
+              <p className="eyebrow">Start your growth</p>
+              <h1>Book a <em>Session</em></h1>
+              <p className="dek">Get in touch to elevate your local business presence.</p>
+            </div>
+
+            <form onSubmit={handleBookSubmit} className="cta-form reveal d2">
+              <div className="form-grid">
+                <div className="form-field">
+                  <label htmlFor="cta-name">Full Name *</label>
+                  <input
+                    id="cta-name"
+                    type="text"
+                    name="name"
+                    placeholder="e.g. Rahul Sharma"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+
+                <div className="form-field">
+                  <label htmlFor="cta-company">Company / Business Name *</label>
+                  <input
+                    id="cta-company"
+                    type="text"
+                    name="company"
+                    placeholder="e.g. Apex Local Cafe"
+                    value={formData.company}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+
+                <div className="form-field">
+                  <label htmlFor="cta-phone">Phone Number *</label>
+                  <input
+                    id="cta-phone"
+                    type="tel"
+                    name="phone"
+                    placeholder="e.g. +91 98765 43210"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+
+                <div className="form-field full-width">
+                  <label htmlFor="cta-req">Your Requirements / Queries</label>
+                  <textarea
+                    id="cta-req"
+                    name="requirements"
+                    rows={3}
+                    placeholder="Describe your requirements or questions..."
+                    value={formData.requirements}
+                    onChange={handleInputChange}
+                  ></textarea>
+                </div>
+              </div>
+
+              {formStatus && (
+                <div className={`form-alert ${formStatus.type}`}>
+                  {formStatus.msg}
+                </div>
+              )}
+
+              <div className="form-actions">
+                <a href="tel:+916379363647" className="btn-contact-now" title="Call AVEN Media directly">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                    <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                  </svg>
+                  <span>Contact Now</span>
+                </a>
+
+                <button type="submit" className="btn-book-now" disabled={isSubmitting}>
+                  {isSubmitting ? "Booking..." : "Book Now"}
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div className="signature">
+            <span><strong>AVEN MEDIA</strong> — Ready when you are.</span>
+            <span className="mark">09 / 09</span>
           </div>
         </section>
       </main>
@@ -361,15 +495,8 @@ export default function Carousel() {
         <button className="ctrl-btn" onClick={showNext} aria-label="Next slide">
           →
         </button>
-        <button
-          className="ctrl-btn"
-          onClick={() => setIsPlaying(!isPlaying)}
-          aria-label={isPlaying ? "Pause auto-play" : "Play auto-play"}
-          title={isPlaying ? "Pause autoplay" : "Start autoplay"}
-        >
-          {isPlaying ? "⏸" : "▶"}
-        </button>
       </nav>
     </div>
   );
 }
+

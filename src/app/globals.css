@@ -305,6 +305,268 @@ h1 em { color:var(--red); font-style:normal; }
 .s8 .lockup img { width:100%; height:auto; display:block; mix-blend-mode:screen; }
 .s8 .lockup p { padding:8% 0 0; color:#e8e4df; font-size:clamp(6px,1.42cqw,15px); font-weight:700; line-height:1.35; }
 
+/* Slide 9 - CTA Booking Form */
+.stage.stage-s9 {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 640px), (max-aspect-ratio: 4/5) {
+  .stage.stage-s9 {
+    aspect-ratio: auto;
+    height: auto;
+    min-height: 620px;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .stage.stage-s9 .slide.s9 {
+    position: relative;
+    height: auto;
+    min-height: 620px;
+    grid-template-rows: auto 1fr auto;
+    padding: 20px 16px 16px;
+    overflow: visible;
+  }
+
+  .s9 .cta-container {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    gap: 12px;
+  }
+
+  .cta-form {
+    padding: 16px 14px;
+  }
+
+  .form-grid {
+    gap: 10px;
+  }
+
+  .form-field input,
+  .form-field textarea {
+    padding: 10px 12px;
+    font-size: 13.5px;
+  }
+
+  .form-field textarea {
+    height: 75px;
+  }
+
+  .btn-contact-now,
+  .btn-book-now {
+    flex: 1;
+    padding: 10px 8px;
+    font-size: 11px;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+
+  .btn-contact-now svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+}
+
+.s9 .cta-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  height: 100%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  position: relative;
+  z-index: 5;
+  gap: clamp(12px, 2.2cqw, 22px);
+}
+
+.s9 .cta-header {
+  padding-top: 0;
+  text-align: left;
+}
+
+.s9 .cta-header h1 {
+  font-size: clamp(20px, 5.8cqw, 54px);
+  max-width: 100%;
+  line-height: 1.02;
+}
+
+.s9 .cta-header .eyebrow {
+  margin-bottom: 0.4em;
+  font-size: clamp(7.5px, 1.5cqw, 15px);
+}
+
+.s9 .cta-header .dek {
+  max-width: 90%;
+  margin-top: 0.3em;
+  font-size: clamp(8px, 1.6cqw, 16px);
+}
+
+.cta-form {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(244, 242, 237, 0.2);
+  border-radius: clamp(10px, 1.8cqw, 18px);
+  padding: clamp(16px, 3.5cqw, 32px);
+  box-shadow: 0 clamp(8px, 2.5cqw, 30px) clamp(16px, 4.5cqw, 55px) rgba(0, 0, 0, 0.6),
+              inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(10px, 1.6cqw, 16px);
+}
+
+@media (min-width: 480px) {
+  .form-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .form-field.full-width {
+    grid-column: span 2;
+  }
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4px, 0.7cqw, 7px);
+}
+
+.form-field label {
+  font-size: clamp(8.5px, 1.5cqw, 14.5px);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--paper);
+  opacity: 0.95;
+}
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  background: rgba(14, 14, 17, 0.92);
+  border: 1px solid rgba(244, 242, 237, 0.22);
+  border-radius: clamp(6px, 1cqw, 10px);
+  padding: clamp(12px, 2.2cqw, 18px) clamp(14px, 2.5cqw, 20px);
+  color: #fff;
+  font-family: var(--body);
+  font-size: clamp(10px, 1.9cqw, 16.5px);
+  font-weight: 500;
+  transition: all 0.25s ease;
+  box-sizing: border-box;
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: var(--red);
+  box-shadow: 0 0 16px rgba(235, 28, 36, 0.45);
+  background: rgba(22, 22, 26, 0.98);
+}
+
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+  color: rgba(244, 242, 237, 0.35);
+  font-size: clamp(9px, 1.7cqw, 15px);
+}
+
+.form-field textarea {
+  resize: none;
+  height: clamp(90px, 13cqw, 120px);
+}
+
+.form-alert {
+  margin-top: clamp(8px, 1.2cqw, 12px);
+  padding: clamp(8px, 1.2cqw, 12px);
+  border-radius: clamp(5px, 0.8cqw, 8px);
+  font-size: clamp(8px, 1.4cqw, 14px);
+  font-weight: 700;
+  text-align: center;
+}
+
+.form-alert.success {
+  background: rgba(46, 204, 113, 0.18);
+  border: 1px solid rgba(46, 204, 113, 0.5);
+  color: #2ecc71;
+}
+
+.form-alert.error {
+  background: rgba(235, 28, 36, 0.18);
+  border: 1px solid rgba(235, 28, 36, 0.5);
+  color: #ff6b6b;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 2cqw, 20px);
+  margin-top: clamp(14px, 2.5cqw, 24px);
+}
+
+.btn-contact-now {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  gap: clamp(6px, 1cqw, 10px);
+  padding: clamp(11px, 2cqw, 17px) clamp(15px, 2.6cqw, 24px);
+  border: 1px solid rgba(244, 242, 237, 0.35);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border-radius: clamp(6px, 1cqw, 10px);
+  font-size: clamp(9px, 1.6cqw, 15px);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.btn-contact-now:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: #fff;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.btn-book-now {
+  flex: 1.2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  padding: clamp(11px, 2cqw, 17px) clamp(15px, 2.6cqw, 24px);
+  border: 0;
+  background: var(--red);
+  color: #fff;
+  border-radius: clamp(6px, 1cqw, 10px);
+  font-size: clamp(9px, 1.6cqw, 15px);
+  font-weight: 900;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 5px 20px rgba(235, 28, 36, 0.55);
+  transition: all 0.25s ease;
+}
+
+.btn-book-now:hover:not(:disabled) {
+  background: #ff2a33;
+  box-shadow: 0 8px 26px rgba(235, 28, 36, 0.8);
+  transform: translateY(-1px);
+}
+
+.btn-book-now:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 /* Control Pill */
 .controls-bar {
   margin-top: 24px;
