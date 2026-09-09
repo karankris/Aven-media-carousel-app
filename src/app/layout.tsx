@@ -16,6 +16,17 @@ export const metadata: Metadata = {
   title: "AVEN MEDIA — Local Growth Carousel App",
   description: "Taking local businesses beyond their location. Interactive local growth carousel & high-res slide exports for AVEN Media.",
   keywords: ["AVEN Media", "Local Growth", "Carousel", "Social Content", "Business Growth"],
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+      { url: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon-16x16.png", type: "image/png", sizes: "16x16" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
   openGraph: {
     title: "AVEN MEDIA — Local Growth Carousel",
     description: "Interactive responsive local growth carousel for AVEN Media. Local stories, made known.",
